@@ -20,14 +20,14 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <div className="w-full space-y-1.5 text-left">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <label
           htmlFor={id}
-          className="block text-xs font-semibold text-slate-700 tracking-wide"
+          className="block text-xs font-semibold text-slate-700 tracking-wide truncate"
         >
           {label}
         </label>
-        {rightAction && <div className="text-xs">{rightAction}</div>}
+        {rightAction && <div className="text-xs shrink-0">{rightAction}</div>}
       </div>
 
       <div className="relative rounded-xl shadow-2xs">
@@ -38,7 +38,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         <input
           id={id}
           type={showPassword ? 'text' : 'password'}
-          className={`w-full rounded-xl glass-input py-2.5 pl-10 pr-11 text-sm text-slate-900 placeholder:text-slate-400 transition-all ${
+          className={`w-full rounded-xl glass-input py-3 sm:py-2.5 pl-10 pr-11 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 transition-all ${
             error
               ? 'border-red-400 bg-red-50/20 focus:border-red-500 focus:ring-red-200'
               : 'border-slate-200 hover:border-slate-300 focus:border-brand-600 focus:ring-brand-500/15'
@@ -49,7 +49,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         <button
           type="button"
           onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-700 transition-colors focus:outline-none"
+          className="absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-400 hover:text-slate-700 active:text-brand-600 transition-colors focus:outline-none"
           tabIndex={-1}
           aria-label={showPassword ? 'Hide password' : 'Show password'}
         >

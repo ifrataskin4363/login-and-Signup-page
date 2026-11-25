@@ -20,15 +20,15 @@ export const FormInput: React.FC<FormInputProps> = ({
 }) => {
   return (
     <div className="w-full space-y-1.5 text-left">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <label
           htmlFor={id}
-          className="block text-xs font-semibold text-slate-700 tracking-wide"
+          className="block text-xs font-semibold text-slate-700 tracking-wide truncate"
         >
           {label}
         </label>
         {helperText && !error && (
-          <span className="text-[11px] text-slate-400">{helperText}</span>
+          <span className="text-[11px] text-slate-400 shrink-0">{helperText}</span>
         )}
       </div>
 
@@ -40,7 +40,7 @@ export const FormInput: React.FC<FormInputProps> = ({
         )}
         <input
           id={id}
-          className={`w-full rounded-xl glass-input py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all ${
+          className={`w-full rounded-xl glass-input py-3 sm:py-2.5 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 transition-all ${
             icon ? 'pl-10' : 'pl-3.5'
           } pr-3.5 ${
             error

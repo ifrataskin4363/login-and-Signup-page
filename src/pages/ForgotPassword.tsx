@@ -44,7 +44,7 @@ export const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 px-4 sm:px-6">
+    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-4 sm:py-8 px-2 sm:px-6">
       <div className="w-full max-w-lg mx-auto flex flex-col items-center">
         <AuthCard>
           {/* Header */}

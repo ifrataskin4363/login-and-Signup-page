@@ -107,7 +107,7 @@ export const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-8 px-4 sm:px-6">
+    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-4 sm:py-8 px-2 sm:px-6">
       <div className="w-full max-w-xl mx-auto flex flex-col items-center">
         {/* Floating Brand Badge */}
         <div className="flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-brand-200 text-brand-700 text-xs font-semibold uppercase tracking-wider shadow-2xs">
@@ -225,7 +225,7 @@ export const Signup: React.FC = () => {
                     setAgreeTerms(e.target.checked);
                     if (errors.terms) setErrors((prev) => ({ ...prev, terms: undefined }));
                   }}
-                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 transition-colors accent-brand-600"
+                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 transition-colors accent-brand-600 shrink-0"
                 />
                 <span className="leading-relaxed">
                   I agree to the{' '}

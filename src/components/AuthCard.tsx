@@ -14,18 +14,32 @@ export const AuthCard: React.FC<AuthCardProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+  const [isTouchOrSmall, setIsTouchOrSmall] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      return window.matchMedia('(hover: none)').matches || window.innerWidth < 768;
     }
     return false;
   });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const hoverQuery = window.matchMedia('(hover: none)');
+
+    const updateCapabilities = () => {
+      setPrefersReducedMotion(motionQuery.matches);
+      setIsTouchOrSmall(hoverQuery.matches || window.innerWidth < 768);
+    };
+
+    motionQuery.addEventListener('change', updateCapabilities);
+    hoverQuery.addEventListener('change', updateCapabilities);
+    window.addEventListener('resize', updateCapabilities);
+
+    return () => {
+      motionQuery.removeEventListener('change', updateCapabilities);
+      hoverQuery.removeEventListener('change', updateCapabilities);
+      window.removeEventListener('resize', updateCapabilities);
+    };
   }, []);
 
   // Motion values for smooth 3D tilt
@@ -40,8 +54,10 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['4deg', '-4deg']);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-4deg', '4deg']);
 
+  const shouldTilt = enableTilt && !prefersReducedMotion && !isTouchOrSmall;
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current || prefersReducedMotion || !enableTilt) return;
+    if (!cardRef.current || !shouldTilt) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -65,22 +81,22 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   return (
     <div
       style={{ perspective: 1200 }}
-      className="w-full flex items-center justify-center p-2 sm:p-4"
+      className="w-full flex items-center justify-center px-1 sm:px-4"
     >
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => !isTouchOrSmall && setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{
-          rotateX: prefersReducedMotion || !enableTilt ? 0 : rotateX,
-          rotateY: prefersReducedMotion || !enableTilt ? 0 : rotateY,
+          rotateX: shouldTilt ? rotateX : 0,
+          rotateY: shouldTilt ? rotateY : 0,
           transformStyle: 'preserve-3d',
         }}
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative w-full max-w-md sm:max-w-lg rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-brand-card transition-all duration-300 p-6 sm:p-10 ${
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative w-full max-w-md sm:max-w-lg rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-brand-card transition-all duration-300 p-5 sm:p-8 md:p-10 ${
           isHovered ? 'shadow-2xl border-brand-300/80' : ''
         } ${className}`}
       >
@@ -94,3 +110,4 @@ export const AuthCard: React.FC<AuthCardProps> = ({
     </div>
   );
 };
+

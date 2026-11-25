@@ -76,8 +76,8 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-4 sm:py-8 px-2 sm:px-6 lg:px-8">
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 lg:gap-12 items-center">
         {/* Left Column: Enterprise Value Proposition (Desktop & Tablet) */}
         <div className="lg:col-span-6 xl:col-span-7">
           <WelcomePanel />
@@ -160,7 +160,7 @@ export const Login: React.FC = () => {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 transition-colors accent-brand-600"
+                    className="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 transition-colors accent-brand-600 shrink-0"
                   />
                   <span className="group-hover:text-slate-900">Keep me signed in for 7 days</span>
                 </label>
