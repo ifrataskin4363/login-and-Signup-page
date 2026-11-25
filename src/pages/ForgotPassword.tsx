@@ -4,10 +4,10 @@ import { useAuth } from '../hooks/useAuth';
 import { AuthCard } from '../components/AuthCard';
 import { FormInput } from '../components/FormInput';
 import { Button } from '../components/Button';
-import { Mail, ArrowLeft, Send, CheckCircle2, AlertCircle, Info } from 'lucide-react';
+import { Mail, ArrowLeft, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export const ForgotPassword: React.FC = () => {
-  const { resetPassword, isDemoMode } = useAuth();
+  const { resetPassword } = useAuth();
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export const ForgotPassword: React.FC = () => {
     setResultMessage(null);
 
     if (!email.trim()) {
-      setError('Please enter your email address.');
+      setError('Please enter your work email address.');
       return;
     }
 
@@ -49,44 +49,44 @@ export const ForgotPassword: React.FC = () => {
         <AuthCard>
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-bloom-blush text-bloom-green flex items-center justify-center mx-auto mb-3 shadow-xs">
+            <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-3 shadow-2xs">
               <Mail className="w-6 h-6" />
             </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-bloom-charcoal tracking-tight">
-              Forgot Your Password?
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Reset Password
             </h1>
-            <p className="mt-2 text-xs sm:text-sm text-bloom-grey leading-relaxed max-w-sm mx-auto">
-              Enter your registered email address to begin the password reset process.
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 leading-relaxed max-w-sm mx-auto">
+              Enter your registered work email to receive a secure password recovery link.
             </p>
           </div>
 
           {/* Result Alert / Confirmation */}
           {resultMessage && (
             <div
-              className={`mb-6 p-4 rounded-2xl border text-xs leading-relaxed animate-in fade-in ${
+              className={`mb-6 p-4 rounded-xl border text-xs leading-relaxed animate-in fade-in ${
                 isSuccess
-                  ? 'bg-bloom-blush/90 border-bloom-rose/40 text-bloom-charcoal'
+                  ? 'bg-blue-50/90 border-brand-200 text-slate-800'
                   : 'bg-red-50 border-red-200 text-red-600'
               }`}
             >
               <div className="flex items-start gap-2.5">
                 {isSuccess ? (
-                  <CheckCircle2 className="w-4 h-4 text-bloom-green shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
                 ) : (
                   <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                 )}
                 <div className="space-y-1">
-                  <p className="font-semibold text-bloom-green">
-                    {isSuccess ? 'Reset Request Handled' : 'Notice'}
+                  <p className="font-semibold text-brand-900">
+                    {isSuccess ? 'Recovery Instructions Dispatched' : 'Notice'}
                   </p>
-                  <p className="text-bloom-charcoal/80">{resultMessage}</p>
+                  <p className="text-slate-600">{resultMessage}</p>
                 </div>
               </div>
             </div>
           )}
 
           {error && (
-            <div className="mb-4 p-3 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-600 font-medium animate-in fade-in flex items-center gap-2">
+            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-600 font-medium animate-in fade-in flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -96,11 +96,10 @@ export const ForgotPassword: React.FC = () => {
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <FormInput
-                label="Registered Email Address"
+                label="Registered Work Email"
                 id="reset-email"
                 type="email"
-                autoComplete="email"
-                placeholder="name@example.com"
+                placeholder="name@company.com"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -110,15 +109,6 @@ export const ForgotPassword: React.FC = () => {
                 required
               />
 
-              {isDemoMode && (
-                <div className="p-3 rounded-xl bg-[#FAF7F5] border border-bloom-pink/30 flex items-start gap-2 text-[11px] text-bloom-grey">
-                  <Info className="w-3.5 h-3.5 text-bloom-rose shrink-0 mt-0.5" />
-                  <span>
-                    Demo mode active: you can test with <code className="text-bloom-charcoal font-semibold">camille@bloom.com</code> or any registered email. The simulated dispatch will be verified.
-                  </span>
-                </div>
-              )}
-
               <Button
                 type="submit"
                 variant="primary"
@@ -126,33 +116,33 @@ export const ForgotPassword: React.FC = () => {
                 rightIcon={<Send className="w-4 h-4" />}
                 className="w-full mt-2"
               >
-                Send Reset Link
+                Send Recovery Link
               </Button>
             </form>
           ) : (
             <div className="space-y-3 pt-2">
-              <button
-                type="button"
+              <Button
+                variant="outline"
                 onClick={() => {
                   setIsSuccess(false);
-                  setResultMessage(null);
                   setEmail('');
+                  setResultMessage(null);
                 }}
-                className="w-full py-2.5 rounded-xl border border-bloom-pink/60 text-xs text-bloom-charcoal hover:bg-white transition-all font-medium"
+                className="w-full text-xs"
               >
-                Try Another Email Address
-              </button>
+                Try Another Email
+              </Button>
             </div>
           )}
 
-          {/* Back to Login link */}
-          <div className="mt-8 pt-6 border-t border-bloom-pink/30 text-center">
+          {/* Card Footer: Back to Login */}
+          <div className="mt-8 pt-6 border-t border-slate-100 text-center">
             <Link
               to="/login"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-bloom-green hover:text-bloom-charcoal transition-colors hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-600 hover:text-brand-700 hover:underline transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Login</span>
+              <span>Return to Sign In</span>
             </Link>
           </div>
         </AuthCard>

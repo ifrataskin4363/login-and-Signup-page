@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 export const BackgroundOrbs: React.FC = () => {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-      {/* Soft gradient base glow */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#FFF5F8] via-[#FDF9FB] to-[#F1F7FB] opacity-90" />
+      {/* Light modern gradient mesh base */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#F8FAFC] via-[#F0F6FF] to-[#EBF3FE] opacity-95" />
 
-      {/* Floating sphere 1 - Rose Pink (Top Right) */}
+      {/* Primary Luminous Royal Blue Orb (Top Right) */}
       <motion.div
         animate={{
-          x: [0, 25, 0],
-          y: [0, -30, 0],
+          x: [0, 20, 0],
+          y: [0, -25, 0],
           scale: [1, 1.08, 1],
         }}
         transition={{
@@ -19,14 +19,14 @@ export const BackgroundOrbs: React.FC = () => {
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gradient-to-br from-[#F4C7D5]/70 to-[#EAA8BE]/40 blur-3xl"
+        className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-brand-400/25 via-blue-500/15 to-transparent blur-3xl"
       />
 
-      {/* Floating sphere 2 - Light Blue (Bottom Left) */}
+      {/* Cyan & Sky Blue Ambient Orb (Bottom Left) */}
       <motion.div
         animate={{
           x: [0, -20, 0],
-          y: [0, 35, 0],
+          y: [0, 30, 0],
           scale: [1, 1.1, 1],
         }}
         transition={{
@@ -35,14 +35,14 @@ export const BackgroundOrbs: React.FC = () => {
           ease: 'easeInOut',
           delay: 1,
         }}
-        className="absolute -bottom-24 -left-20 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#DCEAF5]/80 to-[#FCE8EF]/50 blur-3xl"
+        className="absolute -bottom-32 -left-28 w-[550px] h-[550px] rounded-full bg-gradient-to-tr from-sky-400/20 via-brand-300/15 to-transparent blur-3xl"
       />
 
-      {/* Floating sphere 3 - Sage / Botanical Green subtle accent (Center Right) */}
+      {/* Soft Indigo / Cobalt Accent (Center Right) */}
       <motion.div
         animate={{
-          x: [0, 30, 0],
-          y: [0, 20, 0],
+          x: [0, 25, 0],
+          y: [0, 15, 0],
           scale: [1, 1.05, 1],
         }}
         transition={{
@@ -51,30 +51,15 @@ export const BackgroundOrbs: React.FC = () => {
           ease: 'easeInOut',
           delay: 2,
         }}
-        className="absolute top-1/3 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-[#A8BEA0]/25 to-[#DCEAF5]/35 blur-3xl"
+        className="absolute top-1/3 right-12 w-96 h-96 rounded-full bg-gradient-to-br from-indigo-400/15 via-blue-400/10 to-transparent blur-3xl"
       />
 
-      {/* Floating sphere 4 - Soft Blush (Center Left) */}
-      <motion.div
-        animate={{
-          x: [0, -15, 0],
-          y: [0, -25, 0],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          delay: 0.5,
-        }}
-        className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-gradient-to-r from-[#FCE8EF]/70 to-[#F4C7D5]/30 blur-2xl"
-      />
-
-      {/* Subtle organic grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
+      {/* Subtle crisp modern grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.035]"
         style={{
-          backgroundImage: `radial-gradient(#496B4A 1px, transparent 1px)`,
-          backgroundSize: '36px 36px'
+          backgroundImage: `radial-gradient(#1D4ED8 1.5px, transparent 1.5px)`,
+          backgroundSize: '32px 32px',
         }}
       />
     </div>

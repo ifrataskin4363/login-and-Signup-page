@@ -1,32 +1,92 @@
-# 🌸 BLOOM — Authentication Experience
+# 🛡️ AURA — Enterprise Identity & Access Platform
 
-> **"Your space. Your journey. Your beginning."**
+> **"Next-generation Identity & Access for modern teams."**
 
-An elegant, modern, responsive Login and Signup authentication website crafted with **React, TypeScript, Vite, Tailwind CSS, Framer Motion, and Lucide Icons**. Built with soft pastel aesthetics, botanical accents, glassmorphic depth, and subtle 3D interactions.
+A modern, responsive, high-performance Login and Signup authentication platform built with **React 19, TypeScript, Vite, Tailwind CSS, Framer Motion, and Lucide Icons**. Features an enterprise white-and-blue design language, frosted glassmorphism, responsive 3D card tilt, client-side demo persistence, and full production readiness for **Vercel** and **Supabase**.
 
 ---
 
 ## ✨ Features
 
-- 🌿 **Pastel Botanical Aesthetic**: Carefully balanced palette with Rose Pink (`#EAA8BE`), Pastel Pink (`#F4C7D5`), Light Blush (`#FCE8EF`), Botanical Green (`#496B4A`), Sage Green (`#A8BEA0`), and Soft Sky Blue (`#DCEAF5`).
-- 🪟 **Glassmorphism & 3D Interactive Tilt**: Subtle 3D card tilt driven by cursor position on desktop, soft glow effects, and responsive glass blur.
+- 💎 **Professional White & Blue Palette**: Clean, crisp enterprise aesthetic with luminous whites (`#FFFFFF`, `#F8FAFC`), deep navy slates (`#0F172A`, `#1E293B`), royal blue accents (`#2563EB`, `#1D4ED8`), electric sky highlights (`#38BDF8`), and soft glowing ambient mesh backgrounds.
+- 🪟 **Glassmorphism & 3D Interactive Card Tilt**: Smooth 3D perspective tilt driven by cursor position with spring damping physics, accessible reduced-motion support, and crisp borders.
 - 🔐 **Dual Authentication Modes**:
-  - **Interactive Demo Mode (Default)**: Fully testable out of the box with zero setup. Pre-seeded with demo account (`camille@bloom.com` / `Password123!`), one-click credentials autofill, real client session persistence, and simulated password resets.
-  - **Supabase Production Mode**: Seamlessly switch to production authentication by setting your project environment variables.
+  - **Interactive Demo Mode (Default)**: Fully testable out of the box with zero external configuration. Pre-seeded with an administrator account (`alex@aura.io` / `Password123!`), one-click demo credentials autofill, real client session persistence, dynamic registration, and simulated password resets.
+  - **Supabase Cloud Mode**: Instant switch to production database authentication by supplying your project environment variables.
 - 🛡️ **Comprehensive Validation & Password Security**:
-  - Real-time password strength meter (Weak, Medium, Strong) with animated requirement checklist.
+  - Real-time password strength meter (Weak, Medium, Strong) with an animated requirement checklist.
   - Show / hide password toggles.
-  - Confirm password validation.
-  - Accessible error indicators and alerts.
-- 📱 **Fully Responsive Layout**:
-  - Two-column hero & login card on desktop.
-  - Optimized single-column touch experience on tablets and smartphones.
-- 🚪 **Protected Dashboard Route**: Authenticated member dashboard with profile editing, simulated password management, security notices, help & support, and logout confirmation.
-- ♿ **Accessibility & Motion Comfort**: Full keyboard navigation, semantic labels, and `prefers-reduced-motion` compliance.
+  - Confirm password matching validation.
+  - Clean error banners and accessible form field hints.
+- 📱 **100% Fully Responsive Layout**:
+  - Two-column hero & authentication card on desktop.
+  - Optimized single-column layout on mobile devices and tablets.
+- 🚪 **Protected Dashboard Route**: Authenticated member console with profile editing, simulated password management, security notices, deployment guides, and logout confirmation modal.
+- ⚡ **Vercel Ready**: Pre-configured with `vercel.json` SPA rewrite rules so client-side routes (`/login`, `/signup`, `/dashboard`, `/forgot-password`) never produce 404s on page refresh.
 
 ---
 
-## 📂 Project Structure
+## 🚀 Quick Start (Local Development)
+
+### 1. Install dependencies:
+```bash
+npm install
+```
+
+### 2. Start the development server:
+```bash
+# In Windows PowerShell:
+npm.cmd run dev
+
+# Or in standard bash / macOS / Linux:
+npm run dev
+```
+
+Open **`http://localhost:5173`** in your browser.
+
+### 3. Demo Credentials:
+- **Email:** `alex@aura.io`
+- **Password:** `Password123!`
+- Or simply click **"Autofill Demo Login"** on the Sign In page.
+
+---
+
+## 🌐 Deploy to Vercel (End-to-End)
+
+AURA is configured for seamless zero-config deployment on [Vercel](https://vercel.com).
+
+### Method 1: Deploy via GitHub / Git (Recommended)
+
+1. Push your repository to **GitHub**, **GitLab**, or **Bitbucket**.
+2. Go to [vercel.com/new](https://vercel.com/new) and import your repository.
+3. Vercel automatically detects **Vite**:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+4. *(Optional)* If using Supabase, add the following under **Environment Variables**:
+   - `VITE_SUPABASE_URL` = `https://your-project.supabase.co`
+   - `VITE_SUPABASE_ANON_KEY` = `your-anon-key-here`
+5. Click **Deploy**. Your site is live with a global CDN!
+
+### Method 2: Deploy via Vercel CLI
+
+```bash
+# 1. Install Vercel CLI globally (if not already installed)
+npm install -g vercel
+
+# 2. Log in and deploy
+vercel
+
+# 3. For production release:
+vercel --prod
+```
+
+> **Note on Client Routing**: The included `vercel.json` ensures that deep links (e.g. `your-app.vercel.app/dashboard` or `your-app.vercel.app/signup`) route to `index.html` without 404 errors.
+
+---
+
+## 📂 Project Architecture
 
 ```
 project-wise/
@@ -34,119 +94,52 @@ project-wise/
 ├── src/
 │   ├── components/
 │   │   ├── AuthCard.tsx           # Glassmorphic card container with 3D tilt
-│   │   ├── BackgroundOrbs.tsx     # Ambient floating pastel spheres & glow
-│   │   ├── Button.tsx             # Reusable elevated button with states
+│   │   ├── BackgroundOrbs.tsx     # Ambient royal blue & sky luminous spheres
+│   │   ├── Button.tsx             # Elevated button with loading & icon states
 │   │   ├── DemoBanner.tsx         # Demo mode indicator & one-click autofill
-│   │   ├── Footer.tsx             # Botanical footer with copyright & links
-│   │   ├── FormInput.tsx          # Reusable text/email input with icons & validation
-│   │   ├── Navbar.tsx             # Header with brand logo & auth status modal
+│   │   ├── Footer.tsx             # Enterprise footer with status & security indicators
+│   │   ├── FormInput.tsx          # Reusable input with icons & validation
+│   │   ├── Navbar.tsx             # Header with brand logo & system status modal
 │   │   ├── PasswordInput.tsx      # Password input with show/hide toggle
-│   │   ├── PasswordStrength.tsx   # Dynamic strength meter & checklist
+│   │   ├── PasswordStrength.tsx   # Dynamic strength meter & requirement checklist
 │   │   ├── TermsModal.tsx         # Terms of Service & Privacy dialog
-│   │   └── WelcomePanel.tsx       # Left-column hero illustration & features
+│   │   └── WelcomePanel.tsx       # Enterprise value proposition hero panel
 │   ├── context/
 │   │   └── AuthContext.tsx        # Centralized auth state (Supabase + Demo)
 │   ├── hooks/
 │   │   └── useAuth.ts             # Auth consumer hook
 │   ├── lib/
-│   │   └── supabase.ts            # Supabase client initializer & config detector
+│   │   └── supabase.ts            # Supabase client initializer & config check
 │   ├── pages/
-│   │   ├── Dashboard.tsx          # Member dashboard with settings & logout
-│   │   ├── ForgotPassword.tsx     # Password recovery with status feedback
-│   │   ├── Login.tsx              # Split desktop login & landing experience
-│   │   └── Signup.tsx             # Account registration with live validation
+│   │   ├── Dashboard.tsx          # Authenticated enterprise member console
+│   │   ├── ForgotPassword.tsx     # Password recovery workflow
+│   │   ├── Login.tsx              # Sign In page with demo autofill
+│   │   └── Signup.tsx             # Account registration page with live validation
 │   ├── routes/
-│   │   └── ProtectedRoute.tsx     # Route guard with botanical loading spinner
+│   │   └── ProtectedRoute.tsx     # Route guard for authenticated paths
 │   ├── types/
-│   │   └── auth.ts                # TypeScript interfaces for users & sessions
-│   ├── App.tsx                    # Route definitions & page transition animations
-│   ├── index.css                  # Tailwind directives & glassmorphic utilities
-│   └── main.tsx                   # React root entry point
-├── .env.example                   # Supabase environment variables template
-├── index.html                     # HTML shell with Google Fonts & meta tags
-├── package.json                   # Dependencies and build scripts
-├── postcss.config.js              # PostCSS configuration
-├── tailwind.config.js             # Bloom color tokens, shadows, and animations
-├── tsconfig.json                  # TypeScript configuration
-└── vite.config.ts                 # Vite bundler configuration
+│   │   └── auth.ts                # TypeScript interfaces
+│   ├── App.tsx                    # Routing & animated transitions
+│   ├── index.css                  # Tailwind directives & glass utilities
+│   └── main.tsx                   # React root mount
+├── vercel.json                    # Vercel SPA rewrite configuration
+├── tailwind.config.js             # Brand white & blue palette tokens
+└── package.json                   # Dependencies and scripts
 ```
 
 ---
 
-## 🚀 Quick Start Guide
+## 📜 Available Scripts
 
-### 1. Prerequisites
-- **Node.js** (v18.x or v20.x+)
-- **npm** (v9.x or v10.x+)
-
-### 2. Installation
-Clone or navigate to the project directory and install dependencies:
-
-```bash
-npm install
-```
-
-### 3. Run Development Server
-```bash
-npm run dev
-```
-
-Open your browser at `http://localhost:5173` to explore Bloom.
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` (or `npm.cmd run dev`) | Starts local Vite development server |
+| `npm run build` | Compiles TypeScript and builds production bundle to `dist/` |
+| `npm run preview` | Locally previews the production build |
+| `npm run lint` | Runs Oxlint linter for fast code checks |
 
 ---
 
-## 🔑 Demo Account Credentials
+## 🛡️ License
 
-You can test the application immediately without configuring a database:
-
-- **Email**: `camille@bloom.com`
-- **Password**: `Password123!`
-
-Or click the **"Autofill Demo Login"** button at the top of the login card. You can also register any new account on the Signup page; it will persist in local demo storage for your session.
-
----
-
-## ⚡ Connecting Supabase (Optional for Production)
-
-If you wish to link live Supabase authentication:
-
-1. Create a free project at [supabase.com](https://supabase.com).
-2. Go to **Project Settings** > **API**.
-3. Create a `.env` file in the root directory:
-
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-public-key
-```
-
-4. Restart your development server:
-```bash
-npm run dev
-```
-
-Bloom will automatically detect the credentials, change the badge to **"Supabase Active"**, and route all logins, signups, and password resets through your live database.
-
----
-
-## 🛠️ Build & Deploy
-
-### Production Build
-```bash
-npm run build
-```
-
-This compiles optimized assets into the `dist/` directory.
-
-### Preview Build Locally
-```bash
-npm run preview
-```
-
-### Deploy to Vercel
-1. Install the Vercel CLI: `npm i -g vercel`
-2. Run `vercel` and follow the prompts.
-
-### Deploy to Netlify
-1. Drag and drop the `dist` folder into the Netlify Dashboard, or link your GitHub repository.
-2. Build command: `npm run build`
-3. Publish directory: `dist`
+MIT License. Crafted for modern SaaS and cloud applications.

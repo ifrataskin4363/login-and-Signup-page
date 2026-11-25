@@ -20,17 +20,17 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'relative inline-flex items-center justify-center gap-2 rounded-2xl font-medium text-sm transition-all duration-300 focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed select-none px-6 py-3.5';
+    'relative inline-flex items-center justify-center gap-2 rounded-xl font-medium text-sm transition-all duration-200 focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed select-none px-5 py-3';
 
   const variants = {
     primary:
-      'bg-gradient-to-r from-bloom-rose via-bloom-pink to-bloom-rose bg-[length:200%_auto] text-bloom-charcoal font-semibold shadow-bloom-button hover:shadow-lg hover:-translate-y-0.5 focus:ring-bloom-pink/40 hover:bg-right active:translate-y-0',
+      'bg-gradient-to-r from-brand-600 via-blue-600 to-brand-700 text-white font-semibold shadow-brand-button hover:shadow-lg hover:from-brand-500 hover:to-brand-600 hover:-translate-y-0.5 focus:ring-brand-500/25 active:translate-y-0',
     secondary:
-      'bg-bloom-green text-white hover:bg-bloom-green/90 shadow-sm hover:shadow-md hover:-translate-y-0.5 focus:ring-bloom-sage/40 active:translate-y-0',
+      'bg-slate-900 text-white hover:bg-slate-800 shadow-sm hover:shadow hover:-translate-y-0.5 focus:ring-slate-500/25 active:translate-y-0',
     outline:
-      'bg-white/80 backdrop-blur-sm border-2 border-bloom-pink/70 text-bloom-charcoal hover:bg-bloom-blush/40 hover:border-bloom-rose focus:ring-bloom-pink/30 hover:-translate-y-0.5',
+      'bg-white border border-slate-200 text-slate-700 hover:bg-brand-50/70 hover:border-brand-300 hover:text-brand-700 focus:ring-brand-500/20 hover:-translate-y-0.5 shadow-xs',
     ghost:
-      'bg-transparent text-bloom-charcoal/80 hover:text-bloom-charcoal hover:bg-bloom-blush/50 focus:ring-bloom-pink/20',
+      'bg-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 focus:ring-brand-500/15',
   };
 
   return (

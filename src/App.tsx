@@ -18,10 +18,10 @@ const AnimatedRoutes: React.FC = () => {
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -12 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="flex-1 flex flex-col justify-center"
       >
         <Routes location={location}>
@@ -49,8 +49,8 @@ export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen flex flex-col justify-between selection:bg-bloom-pink/60 selection:text-bloom-charcoal">
-          {/* Decorative ambient background spheres & glow */}
+        <div className="relative min-h-screen flex flex-col justify-between selection:bg-brand-500/20 selection:text-brand-900">
+          {/* Ambient white & blue glow background */}
           <BackgroundOrbs />
 
           {/* Navigation Bar */}

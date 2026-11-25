@@ -14,12 +14,15 @@ export const AuthCard: React.FC<AuthCardProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
     const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener('change', handler);
     return () => mediaQuery.removeEventListener('change', handler);
@@ -33,9 +36,9 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   const mouseXSpring = useSpring(x, { stiffness: 180, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 180, damping: 20 });
 
-  // Rotate ranges: subtle tilt (+/- 5 degrees)
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['5deg', '-5deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-5deg', '5deg']);
+  // Rotate ranges: subtle tilt (+/- 4 degrees)
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['4deg', '-4deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-4deg', '4deg']);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current || prefersReducedMotion || !enableTilt) return;
@@ -74,16 +77,16 @@ export const AuthCard: React.FC<AuthCardProps> = ({
           rotateY: prefersReducedMotion || !enableTilt ? 0 : rotateY,
           transformStyle: 'preserve-3d',
         }}
-        initial={{ opacity: 0, y: 25, scale: 0.98 }}
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative w-full max-w-md sm:max-w-lg rounded-[28px] sm:rounded-[36px] bg-white/85 backdrop-blur-xl border border-bloom-pink/50 shadow-bloom-card transition-shadow duration-500 p-6 sm:p-10 ${
-          isHovered ? 'shadow-2xl border-bloom-rose/70' : ''
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative w-full max-w-md sm:max-w-lg rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-brand-card transition-all duration-300 p-6 sm:p-10 ${
+          isHovered ? 'shadow-2xl border-brand-300/80' : ''
         } ${className}`}
       >
-        {/* Subtle decorative inner corner glow */}
-        <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-bloom-pink/30 blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-28 h-28 rounded-full bg-bloom-blue/40 blur-2xl pointer-events-none" />
+        {/* Subtle decorative internal corner glows */}
+        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-brand-400/10 blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-8 -left-8 w-28 h-28 rounded-full bg-sky-400/10 blur-2xl pointer-events-none" />
 
         {/* Card Content */}
         <div className="relative z-10">{children}</div>

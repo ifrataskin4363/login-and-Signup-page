@@ -1,17 +1,16 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import type { User, AuthSession, AuthContextType } from '../types/auth';
+import type { User, AuthSession } from '../types/auth';
+import { AuthContext } from './auth-context';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const DEMO_STORAGE_KEY = 'bloom_demo_auth_session';
-const DEMO_USERS_KEY = 'bloom_demo_registered_users';
+const DEMO_STORAGE_KEY = 'aura_demo_auth_session';
+const DEMO_USERS_KEY = 'aura_demo_registered_users';
 
 // Pre-seeded demo user
 const DEFAULT_DEMO_USER: User = {
   id: 'usr_demo_101',
-  name: 'Camille Laurent',
-  email: 'camille@bloom.com',
+  name: 'Alex Rivera',
+  email: 'alex@aura.io',
   createdAt: new Date().toISOString(),
   provider: 'demo',
 };
@@ -52,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const mappedUser: User = {
               id: sbUser.id,
               email: sbUser.email || '',
-              name: sbUser.user_metadata?.full_name || sbUser.email?.split('@')[0] || 'Bloom Member',
+              name: sbUser.user_metadata?.full_name || sbUser.email?.split('@')[0] || 'AURA Member',
               avatarUrl: sbUser.user_metadata?.avatar_url,
               createdAt: sbUser.created_at,
               provider: 'supabase',
@@ -71,7 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               const mappedUser: User = {
                 id: currentSession.user.id,
                 email: currentSession.user.email || '',
-                name: currentSession.user.user_metadata?.full_name || currentSession.user.email?.split('@')[0] || 'Bloom Member',
+                name: currentSession.user.user_metadata?.full_name || currentSession.user.email?.split('@')[0] || 'AURA Member',
                 avatarUrl: currentSession.user.user_metadata?.avatar_url,
                 createdAt: currentSession.user.created_at,
                 provider: 'supabase',
@@ -92,8 +91,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             authListener.subscription.unsubscribe();
           };
         } else {
-          // Demo mode: Check sessionStorage first, then localStorage
-          const savedSession = sessionStorage.getItem(DEMO_STORAGE_KEY) || localStorage.getItem(DEMO_STORAGE_KEY);
+          // Demo mode: Check sessionStorage first, then localStorage (with fallback to legacy key)
+          const savedSession =
+            sessionStorage.getItem(DEMO_STORAGE_KEY) ||
+            localStorage.getItem(DEMO_STORAGE_KEY) ||
+            sessionStorage.getItem('bloom_demo_auth_session') ||
+            localStorage.getItem('bloom_demo_auth_session');
+
           if (savedSession) {
             try {
               const parsed: AuthSession = JSON.parse(savedSession);
@@ -138,7 +142,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const mappedUser: User = {
             id: data.user.id,
             email: data.user.email || '',
-            name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'Bloom Member',
+            name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'AURA Member',
             avatarUrl: data.user.user_metadata?.avatar_url,
             createdAt: data.user.created_at,
             provider: 'supabase',
@@ -154,14 +158,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, error: 'Could not resolve user session.' };
       } else {
         // DEMO MODE LOGIN
-        await new Promise((resolve) => setTimeout(resolve, 600)); // simulate network delay
+        await new Promise((resolve) => setTimeout(resolve, 500)); // simulate network delay
 
         const normalizedEmail = email.trim().toLowerCase();
         const storedUsersRaw = localStorage.getItem(DEMO_USERS_KEY);
         const storedUsers = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
 
-        // Match against stored demo users or default demo user
-        const matched = storedUsers.find((u: any) => u.email.toLowerCase() === normalizedEmail);
+        // Support matching either new default user or existing users or legacy camille@bloom.com
+        const matched = storedUsers.find(
+          (u: any) =>
+            u.email.toLowerCase() === normalizedEmail ||
+            (normalizedEmail === 'camille@bloom.com' && u.email === DEFAULT_DEMO_USER.email)
+        );
 
         if (!matched) {
           return {
@@ -257,7 +265,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: true };
       } else {
         // DEMO MODE SIGNUP
-        await new Promise((resolve) => setTimeout(resolve, 750));
+        await new Promise((resolve) => setTimeout(resolve, 600));
 
         const normalizedEmail = email.trim().toLowerCase();
         const storedUsersRaw = localStorage.getItem(DEMO_USERS_KEY);
@@ -318,6 +326,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       localStorage.removeItem(DEMO_STORAGE_KEY);
       sessionStorage.removeItem(DEMO_STORAGE_KEY);
+      localStorage.removeItem('bloom_demo_auth_session');
+      sessionStorage.removeItem('bloom_demo_auth_session');
       setUser(null);
       setSession(null);
     } catch (err) {
@@ -347,8 +357,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           message: `A password reset link has been dispatched to ${normalizedEmail}. Please check your inbox.`,
         };
       } else {
-        // DEMO MODE: Explicitly notify about simulated email
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        // DEMO MODE
+        await new Promise((resolve) => setTimeout(resolve, 600));
 
         const storedUsersRaw = localStorage.getItem(DEMO_USERS_KEY);
         const storedUsers = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
@@ -439,10 +449,3 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuthContext must be used within an AuthProvider');
-  }
-  return context;
-};

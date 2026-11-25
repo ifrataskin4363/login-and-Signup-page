@@ -57,18 +57,18 @@ export const Login: React.FC = () => {
     const result = await login(email, password, rememberMe);
 
     if (result.success) {
-      setSuccessMessage('Welcome back! Opening your personal space...');
+      setSuccessMessage('Welcome back! Authenticating session...');
       confetti({
         particleCount: 50,
         spread: 60,
         origin: { y: 0.6 },
-        colors: ['#F4C7D5', '#EAA8BE', '#496B4A', '#A8BEA0'],
+        colors: ['#2563EB', '#3B82F6', '#60A5FA', '#93C5FD', '#1D4ED8'],
       });
 
       const redirectPath = (location.state as any)?.from?.pathname || '/dashboard';
       setTimeout(() => {
         navigate(redirectPath, { replace: true });
-      }, 700);
+      }, 600);
     } else {
       setErrors({ general: result.error || 'Authentication failed. Please verify credentials.' });
       setIsLoading(false);
@@ -78,7 +78,7 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-[calc(100vh-140px)] flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        {/* Left Column: Welcome & Brand Story (Desktop & Tablet) */}
+        {/* Left Column: Enterprise Value Proposition (Desktop & Tablet) */}
         <div className="lg:col-span-6 xl:col-span-7">
           <WelcomePanel />
         </div>
@@ -91,24 +91,24 @@ export const Login: React.FC = () => {
 
             {/* Card Header */}
             <div className="text-center sm:text-left mb-6">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-bloom-charcoal tracking-tight">
-                Welcome Back!
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                Welcome Back
               </h2>
-              <p className="mt-1.5 text-xs sm:text-sm text-bloom-grey leading-relaxed">
-                Sign in to continue your journey.
+              <p className="mt-1.5 text-xs sm:text-sm text-slate-500 leading-relaxed">
+                Sign in to manage your identity, sessions, and cloud access.
               </p>
             </div>
 
             {/* Error / Success Banners */}
             {errors.general && (
-              <div className="mb-4 p-3 rounded-2xl bg-red-50/80 border border-red-200 text-xs text-red-600 font-medium animate-in fade-in">
+              <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-600 font-medium animate-in fade-in">
                 {errors.general}
               </div>
             )}
 
             {successMessage && (
-              <div className="mb-4 p-3 rounded-2xl bg-bloom-blush border border-bloom-rose/40 text-xs text-bloom-green font-medium flex items-center gap-2 animate-in fade-in">
-                <CheckCircle2 className="w-4 h-4 text-bloom-green shrink-0" />
+              <div className="mb-4 p-3 rounded-xl bg-blue-50 border border-brand-200 text-xs text-brand-700 font-medium flex items-center gap-2 animate-in fade-in">
+                <CheckCircle2 className="w-4 h-4 text-brand-600 shrink-0" />
                 <span>{successMessage}</span>
               </div>
             )}
@@ -116,11 +116,11 @@ export const Login: React.FC = () => {
             {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <FormInput
-                label="Email Address"
+                label="Work Email"
                 id="login-email"
                 type="email"
                 autoComplete="email"
-                placeholder="name@example.com"
+                placeholder="name@company.com"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -145,7 +145,7 @@ export const Login: React.FC = () => {
                 rightAction={
                   <Link
                     to="/forgot-password"
-                    className="text-bloom-green hover:text-bloom-charcoal font-medium text-xs hover:underline transition-colors"
+                    className="text-brand-600 hover:text-brand-700 font-medium text-xs hover:underline transition-colors"
                   >
                     Forgot Password?
                   </Link>
@@ -155,14 +155,14 @@ export const Login: React.FC = () => {
 
               {/* Remember Me */}
               <div className="flex items-center justify-between pt-1">
-                <label className="flex items-center gap-2.5 cursor-pointer text-xs text-bloom-charcoal/80 select-none group">
+                <label className="flex items-center gap-2.5 cursor-pointer text-xs text-slate-600 select-none group">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded-md border-bloom-pink/70 text-bloom-green focus:ring-bloom-pink focus:ring-offset-0 transition-colors accent-bloom-green"
+                    className="w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 focus:ring-offset-0 transition-colors accent-brand-600"
                   />
-                  <span className="group-hover:text-bloom-charcoal">Remember Me</span>
+                  <span className="group-hover:text-slate-900">Keep me signed in for 7 days</span>
                 </label>
               </div>
 
@@ -179,12 +179,12 @@ export const Login: React.FC = () => {
             </form>
 
             {/* Card Footer: Switch to Signup */}
-            <div className="mt-8 pt-6 border-t border-bloom-pink/30 text-center">
-              <p className="text-xs text-bloom-grey">
-                Don't have an account yet?{' '}
+            <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+              <p className="text-xs text-slate-500">
+                Don't have an enterprise account?{' '}
                 <Link
                   to="/signup"
-                  className="font-semibold text-bloom-green hover:text-bloom-charcoal hover:underline transition-colors"
+                  className="font-semibold text-brand-600 hover:text-brand-700 hover:underline transition-colors"
                 >
                   Create Account
                 </Link>
